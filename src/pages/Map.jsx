@@ -98,153 +98,180 @@ const FitToBounds = ({ bounds }) => {
 };
 
 const Map = () => {
-  const [userPos, setUserPos] = useState(null);
-  const [routeTo, setRouteTo] = useState(null);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const shownTaskIds = useRef(new Set());
-  const wasInsideRef = useRef(false);
-
-  const email = localStorage.getItem("uws_user");
-  const selfie = email ? localStorage.getItem(`userSelfie-${email}`) : null;
-  const completed = email ? JSON.parse(localStorage.getItem(`completedTasks-${email}`) || "[]") : [];
-  const failed = email ? JSON.parse(localStorage.getItem(`failedTasks-${email}`) || "[]") : [];
-
-  const polygon = turf.polygon([
-    uwsPolygonCoords.map(([lat, lng]) => [lng, lat]),
-  ]);
-
-  const leafletBounds = L.latLngBounds(uwsPolygonCoords);
-
-  useEffect(() => {
-    const updateOnlineStatus = () => {
-      setIsOnline(navigator.onLine);
-    };
-
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
-    updateOnlineStatus();
-
-    return () => {
-      window.removeEventListener("online", updateOnlineStatus);
-      window.removeEventListener("offline", updateOnlineStatus);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isOnline) {
-      toast.error("You are offline");
-      return;
-    }
-
-    const useMock = false;
-    const mockCoords = [55.84258479601383, -4.428774845941453] 
-
-
-    const handleCoords = (lat, lng) => {
-      const point = turf.point([lng, lat]);
-      const inside = turf.booleanPointInPolygon(point, polygon);
-      setUserPos([lat, lng]);
-
-      if (inside) {
-        if (!wasInsideRef.current) {
-          toast.success(" Inside UWS area");
-          wasInsideRef.current = true;
-        }
-
-        tasks.forEach((task) => {
-          const taskPoint = turf.point([task.coords[1], task.coords[0]]);
-          const dist = turf.distance(point, taskPoint, { units: "meters" });
-
-          if (
-            dist <= 10 &&
-            !shownTaskIds.current.has(task.id) &&
-            !completed.includes(task.id) &&
-            !failed.includes(task.id)
-          )  {
-            shownTaskIds.current.add(task.id);
-            toast.success(` Task available at ${task.name}`);
-            window.location.href = `/task/${task.id}`;
-          }
-        });
-      } else {
-        if (wasInsideRef.current) wasInsideRef.current = false;
-        toast.error(" Outside UWS");
+    const [userPos, setUserPos] = useState(null);
+    const [routeTo, setRouteTo] = useState(null);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const shownTaskIds = useRef(new Set());
+    const wasInsideRef = useRef(false);
+  
+    const email = localStorage.getItem("uws_user");
+    const selfie = email ? localStorage.getItem(`userSelfie-${email}`) : null;
+    const completed = email ? JSON.parse(localStorage.getItem(`completedTasks-${email}`) || "[]") : [];
+    const failed = email ? JSON.parse(localStorage.getItem(`failedTasks-${email}`) || "[]") : [];
+  
+    const polygon = turf.polygon([
+      uwsPolygonCoords.map(([lat, lng]) => [lng, lat]),
+    ]);
+  
+    const leafletBounds = L.latLngBounds(uwsPolygonCoords);
+  
+    useEffect(() => {
+      const updateOnlineStatus = () => {
+        setIsOnline(navigator.onLine);
+      };
+  
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+      updateOnlineStatus();
+  
+      return () => {
+        window.removeEventListener("online", updateOnlineStatus);
+        window.removeEventListener("offline", updateOnlineStatus);
+      };
+    }, []);
+  
+    useEffect(() => {
+      if (!isOnline) {
+        toast.error("You are offline");
+        return;
       }
-    };
-
-    if (useMock) {
-      handleCoords(...mockCoords);
-    } else if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => handleCoords(pos.coords.latitude, pos.coords.longitude),
-        () => toast.error(" Failed to fetch location")
+  
+      const useMock = false;
+      const mockCoords = [55.84258479601383, -4.428774845941453];
+  
+      const handleCoords = (lat, lng) => {
+        const point = turf.point([lng, lat]);
+        const inside = turf.booleanPointInPolygon(point, polygon);
+        setUserPos([lat, lng]);
+      
+        if (inside) {
+          if (!wasInsideRef.current) {
+            toast.success("Inside UWS area");
+            wasInsideRef.current = true;
+          }
+      
+          tasks.forEach((task) => {
+            const taskPoint = turf.point([task.coords[1], task.coords[0]]);
+            const dist = turf.distance(point, taskPoint, { units: "meters" });
+      
+            if (
+              dist <= 10 &&
+              !shownTaskIds.current.has(task.id) &&
+              !completed.includes(task.id) &&
+              !failed.includes(task.id)
+            ) {
+              shownTaskIds.current.add(task.id);
+              toast.success(`Task available at ${task.name}`);
+              window.location.href = `/task/${task.id}`;
+            }
+          });
+        } else {
+          if (wasInsideRef.current) {
+            toast.error("Outside UWS");
+            wasInsideRef.current = false;
+          }
+        }
+      };
+      
+  
+      if (useMock) {
+        handleCoords(...mockCoords);
+      } else if ("geolocation" in navigator) {
+        let gotFirstFix = false;
+        const maxWait = setTimeout(() => {
+          if (!gotFirstFix) {
+            toast.error("Unable to get your location. Please enable GPS and try again.");
+          }
+        }, 10000);
+  
+        const geoId = navigator.geolocation.watchPosition(
+          (pos) => {
+            gotFirstFix = true;
+            clearTimeout(maxWait);
+            handleCoords(pos.coords.latitude, pos.coords.longitude);
+          },
+          (err) => {
+            toast.error("Location permission denied or unavailable.");
+            console.error("Location error:", err);
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0,
+          }
+        );
+  
+        return () => {
+          navigator.geolocation.clearWatch(geoId);
+          clearTimeout(maxWait);
+        };
+      }
+    }, [isOnline]);
+  
+    if (!isOnline) {
+      return (
+        <div className="h-[calc(100vh-64px)] w-full bg-[#1d1e3c] flex items-center justify-center text-center text-white px-4">
+          <h1 className="text-xl font-bold">To access this feature, please connect to the internet.</h1>
+        </div>
       );
     }
-  }, [isOnline]);
-
-  if (!isOnline) {
+  
     return (
-      <div className="h-[calc(100vh-64px)] w-full bg-[#1d1e3c] flex items-center justify-center text-center text-white px-4">
-        <h1 className="text-2xl font-bold">To access this feature, please connect to the internet.</h1>
+      <div className="fixed inset-0 pt-0 pb-16 z-0 overflow-hidden">
+        <MapContainer
+          center={[55.8434, -4.4292]}
+          zoom={16}
+          scrollWheelZoom
+          className="w-full h-full"
+        >
+          <FitToBounds bounds={leafletBounds} />
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+          <Polygon positions={uwsPolygonCoords} pathOptions={{ color: "teal" }} />
+  
+          {tasks.map((task) => {
+            const isDone = completed.includes(task.id);
+            const isFailed = failed.includes(task.id);
+            const markerIcon = isDone ? greenIcon : isFailed ? redIcon : defaultIcon;
+  
+            return (
+              <Marker key={task.id} position={task.coords} icon={markerIcon}>
+                <Popup>
+                  <div>
+                    <p className="font-bold">{task.name}</p>
+                    <button
+                      className="btn btn-sm btn-primary mt-2"
+                      onClick={() => {
+                        if (userPos) {
+                          setRouteTo([task.coords, userPos]);
+                        } else {
+                          toast.error("User location unknown");
+                        }
+                      }}
+                    >
+                      Navigate
+                    </button>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+  
+          {userPos && (
+            <Marker position={userPos} icon={userIcon(selfie)}>
+              <Popup>Your Location</Popup>
+            </Marker>
+          )}
+  
+          {routeTo && (
+            <Polyline positions={[routeTo[1], routeTo[0]]} color="blue" />
+          )}
+        </MapContainer>
       </div>
     );
-  }
-
-  return (
-    <div className="fixed inset-0 pt-0 pb-16 z-0 overflow-hidden">
-      <MapContainer
-        center={[55.8434, -4.4292]}
-        zoom={16}
-        scrollWheelZoom
-        className="w-full h-full"
-      >
-        <FitToBounds bounds={leafletBounds} />
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
-        <Polygon positions={uwsPolygonCoords} pathOptions={{ color: "teal" }} />
-
-        {tasks.map((task) => {
-          const isDone = completed.includes(task.id);
-          const isFailed = failed.includes(task.id);
-          const markerIcon = isDone ? greenIcon : isFailed ? redIcon : defaultIcon;
-
-          return (
-            <Marker key={task.id} position={task.coords} icon={markerIcon}>
-              <Popup>
-                <div>
-                  <p className="font-bold">{task.name}</p>
-                  <button
-                    className="btn btn-sm btn-primary mt-2"
-                    onClick={() => {
-                      if (userPos) {
-                        setRouteTo([task.coords, userPos]);
-                      } else {
-                        toast.error("User location unknown");
-                      }
-                    }}
-                  >
-                    Navigate
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          );
-        })}
-
-        {userPos && (
-          <Marker position={userPos} icon={userIcon(selfie)}>
-            <Popup>📍 Your Location</Popup>
-          </Marker>
-        )}
-
-        {routeTo && (
-          <Polyline positions={[routeTo[1], routeTo[0]]} color="blue" />
-        )}
-      </MapContainer>
-    </div>
-  );
-};
-
+  };
+  
+  
 export default Map;

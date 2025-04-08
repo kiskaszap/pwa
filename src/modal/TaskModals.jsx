@@ -1,4 +1,3 @@
-// This file defines 3 task modals: QuizModal, TextModal, PhotoModal
 import React from "react";
 import { Dialog } from "@headlessui/react";
 import { toast } from "react-hot-toast";

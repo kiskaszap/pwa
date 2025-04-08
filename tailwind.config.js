@@ -10,10 +10,10 @@ module.exports = {
     },
   },
   daisyui: {
-    themes: ["light"], // Disable dark mode and use only the light theme
+    themes: ["light"], 
   },
   corePlugins: {
     preflight: false,
   },
-  plugins: [require("daisyui")], // Add DaisyUI as a plugin
+  plugins: [require("daisyui")], 
 };
