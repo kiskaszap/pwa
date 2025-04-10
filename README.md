@@ -193,7 +193,7 @@ This file is essential for dynamic task rendering across the app.
 - ReactDOM entry point.
 - Renders &lt;App /&gt; and includes global configuration for toast messages (e.g., styles, positions, durations).
 
-!\[Directory Structure\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture1.png>)
+!\[Directory Structure\](<https://github.com/kiskaszap/pwa/blob/main/mdImages/Picture1.png>)
 
 **Sitemap**
 
