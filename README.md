@@ -193,7 +193,7 @@ This file is essential for dynamic task rendering across the app.
 - ReactDOM entry point.
 - Renders &lt;App /&gt; and includes global configuration for toast messages (e.g., styles, positions, durations).
 
-![Directory Structure\](<https://github.com/kiskaszap/pwa/blob/main/mdImages/Picture1.png>)
+![Directory](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture1.png)
 
 **Sitemap**
 
@@ -212,19 +212,19 @@ This file is essential for dynamic task rendering across the app.
 
 1. **Click on the share button in the middle of the screen**
 
-**!\[Share button\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture3.png>)**
+![Share Button](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture3.png)
 
 1. **Select the “Add to Home Screen”**
 
-**!\[Add to Home\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture4.png>)**
+![Add to Home](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture4.png)
 
 1. **Click on the “Add” button**
 
-**!\[Add Button\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture5.png>)**
+![Add Button](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture5.png)
 
 1. **Now you can launch the app**
 
-**!\[Display on Home Screen\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture6.png>)**
+![Launch](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture6.png)
 
 **Post-Installation**
 
@@ -251,23 +251,23 @@ This file is essential for dynamic task rendering across the app.
 
 1. Visit app URL
 
-!\[Visit url\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture7.png>)
+![Visit Url](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture7.png)
 
 1. Click on the three dots
 
-**!\[Dots\](**[**https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture8.png**](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture8.png)**)**
+![Dots](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture8.png)
 
 1. Click on “Add to Home Screen”
 
-!\[Add to Home\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture9.png>)
+![Add to Home](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture9.png)
 
 1. After click on “Add”
 
-!\[Click on Add\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture10.png>)
+![Add](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture10.png)
 
 1. After click on “Add authomatically”
 
-!\[Add automatically\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture11.png>)
+![Add Automathically](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture11.png)
 
 **Post-Install Checklist:**
 
@@ -293,7 +293,7 @@ When the app launches, users are greeted by an animated splash screen displaying
 
 A hidden installation prompt (for PWA support) is captured via useRef and triggered on user interaction (logo click).
 
-**!\[Splash\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture12.png>)**
+![Splash](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture12.png)
 
 **Login (Email Registration)**
 
@@ -306,7 +306,7 @@ A hidden installation prompt (for PWA support) is captured via useRef and trigge
 - If the input is invalid or empty:  
     Please enter a valid email address.
 
-**!\[Login\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture13.png>)**
+![Login](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture13.png)
 
 **Selfie Page**
 
@@ -333,11 +333,11 @@ On successful save:
 - Toast appears: Selfie saved successfully!
 - User is redirected to the map view.
 
-**!\[Selfie\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture14.png>)**
+![Selfie](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture14.png)
 
 **Bottom Navigation Drawer**
 
-**!\[Drawer\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture15.png>)**
+![Drawer](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture15.png)
 
 Visible on all pages except:  
 /, /login, /selfie
@@ -355,7 +355,7 @@ Navigation icons are powered by react-icons.
 
 This is the main interface of the app.
 
-!\[Map\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture16.png>)
+![Map](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture16.png)
 
 Features:
 
@@ -385,14 +385,14 @@ Interactive Map Options:
 - Tap task marker → popup opens
 - "Navigate" button calculates direction using Polyline
 
-!\[Navigate\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture17.png>)
+![Navigate](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture17.png)
 
-!\[Direction\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture18.png>)
+![Direction](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture18.png)
 
 - User icon includes their selfie as a custom marker
 - Colour differentiation of available tasks (marked by blue), finished tasks (marked by green) and failed tasks (marked by red)
 
-!\[Map screen\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture19.png>)
+![Map screen](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture19.png)
 
 **Task Page**
 
@@ -405,7 +405,7 @@ Interactive Map Options:
   - If correct: Correct! → Task marked as completed
   - If incorrect: Wrong answer → Task marked as failed
 
-!\[Quiz task\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture20.png>)
+![Quiz](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture20.png)
 
 **Text Input**
 
@@ -414,7 +414,7 @@ Interactive Map Options:
   - Text is saved in localStorage
   - Toast: Response submitted
 
-!\[Input task\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture21.png>)
+![Input](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture21.png)
 
 **Photo Task**
 
@@ -425,7 +425,7 @@ Interactive Map Options:
   - Retake photo if needed
   - Submit photo to mark task as completed
 
-!\[Photo task\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture22.png>)
+![Photo](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture22.png)
 
 **Additional Features:**
 
@@ -448,7 +448,7 @@ Interactive Map Options:
 - Celebrates user progress
 - Accessible from bottom navigation drawer
 
-**!\[Trophies page\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture23.png>)**
+![Trophies](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture23.png)
 
 **Logout**
 
