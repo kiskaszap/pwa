@@ -197,7 +197,7 @@ This file is essential for dynamic task rendering across the app.
 
 **Sitemap**
 
-!\[Sitemap\](<https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture2.png>)
+![Sitemap Diagram](https://raw.githubusercontent.com/kiskaszap/pwa/main/mdImages/Picture2.png)
 
 **2\. PWA Installation - iOS (Safari)**
 
